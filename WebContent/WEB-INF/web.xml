@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://java.sun.com/xml/ns/javaee"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	id="WebApp_ID" version="2.5">
+	<display-name>eggs</display-name>
+	<welcome-file-list>
+		<welcome-file>index.html</welcome-file>
+		<welcome-file>index.htm</welcome-file>
+		<welcome-file>index.jsp</welcome-file>
+		<welcome-file>default.html</welcome-file>
+		<welcome-file>default.htm</welcome-file>
+		<welcome-file>default.jsp</welcome-file>
+	</welcome-file-list>
+
+	<jsp-config>
+		<jsp-property-group>
+			<url-pattern>*.jsp</url-pattern>
+			<include-prelude>/WEB-INF/inc/header.inc</include-prelude>
+			<include-coda>/WEB-INF/inc/footer.inc</include-coda>
+		</jsp-property-group>
+	</jsp-config>
+
+	<listener>
+		<listener-class>com.eggs.servlet.InitListener</listener-class>
+	</listener>
+
+	<security-role>
+		<role-name>manager</role-name>
+	</security-role>
+	<security-constraint>
+		<web-resource-collection>
+			<web-resource-name>secret-pages</web-resource-name>
+			<description>unauthorized should not see it</description>
+			<url-pattern>/secret/*</url-pattern>
+		</web-resource-collection>
+		<auth-constraint>
+			<role-name>manager</role-name>
+		</auth-constraint>
+	</security-constraint>
+	<login-config>
+		<auth-method>DIGEST</auth-method>
+	</login-config>
+
+	<error-page>
+		<error-code>404</error-code>
+		<location>/error404.jsp</location>
+	</error-page>
+</web-app>
